@@ -1,0 +1,418 @@
+{
+  "info": {
+    "_postman_id": "30b0cca6-3b70-462a-baea-87d60aa8039e",
+    "name": "My Collection",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "60296046",
+    "_collection_link": "https://go.postman.co/collection/60296046-30b0cca6-3b70-462a-baea-87d60aa8039e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Login - success",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));\npm.test(\"Has access_token\", () => pm.expect(pm.response.json()).to.have.property(\"access_token\"));\npm.collectionVariables.set(\"token\", pm.response.json().access_token);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"test@example.com\", \"password\": \"password123\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://www.softwaretestpilot.com/api/public/demoshop/auth/login",
+          "protocol": "https",
+          "host": [
+            "www",
+            "softwaretestpilot",
+            "com"
+          ],
+          "path": [
+            "api",
+            "public",
+            "demoshop",
+            "auth",
+            "login"
+          ]
+        },
+        "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+      },
+      "response": []
+    },
+    {
+      "name": "Post data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "postman-echo.com/post",
+          "host": [
+            "postman-echo",
+            "com"
+          ],
+          "path": [
+            "post"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": []
+    },
+    {
+      "name": "Get products",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));\r\npm.test(\"Response is JSON\", () => pm.response.to.be.json);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://www.softwaretestpilot.com/api/public/demoshop/products",
+          "protocol": "https",
+          "host": [
+            "www",
+            "softwaretestpilot",
+            "com"
+          ],
+          "path": [
+            "api",
+            "public",
+            "demoshop",
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add to cart",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 201\", () => pm.response.to.have.status(201));\r\npm.test(\"Item added to cart\", () => pm.expect(pm.response.json().items[0].productId).to.eql(1));\r\npm.test(\"Total is a number\", () => pm.expect(pm.response.json().total).to.be.a(\"number\"));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"productId\": 1, \"quantity\": 2}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://www.softwaretestpilot.com/api/public/demoshop/cart/items",
+          "protocol": "https",
+          "host": [
+            "www",
+            "softwaretestpilot",
+            "com"
+          ],
+          "path": [
+            "api",
+            "public",
+            "demoshop",
+            "cart",
+            "items"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create order",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 201 or 200\", () => pm.expect([200, 201]).to.include(pm.response.code));\r\npm.test(\"Order has id\", () => pm.expect(pm.response.json()).to.have.property(\"id\"));\r\npm.collectionVariables.set(\"orderId\", pm.response.json().id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"items\": [{\"productId\": 1, \"quantity\": 2}]}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://www.softwaretestpilot.com/api/public/demoshop/orders",
+          "protocol": "https",
+          "host": [
+            "www",
+            "softwaretestpilot",
+            "com"
+          ],
+          "path": [
+            "api",
+            "public",
+            "demoshop",
+            "orders"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get order",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 200 or 404\", () => pm.expect([200, 404]).to.include(pm.response.code));\r\npm.test(\"Response is JSON\", () => pm.response.to.be.json);\r\npm.test(\"Response has valid structure\", () => {\r\n    const body = pm.response.json();\r\n    pm.expect(body).to.satisfy(b => Array.isArray(b.items) || b.error === \"not_found\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://www.softwaretestpilot.com/api/public/demoshop/orders/{{orderId}}",
+          "protocol": "https",
+          "host": [
+            "www",
+            "softwaretestpilot",
+            "com"
+          ],
+          "path": [
+            "api",
+            "public",
+            "demoshop",
+            "orders",
+            "{{orderId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login - wrong password",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 401\", () => pm.response.to.have.status(401));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"test@example.com\", \"password\": \"wrongpass\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://www.softwaretestpilot.com/api/public/demoshop/auth/login",
+          "protocol": "https",
+          "host": [
+            "www",
+            "softwaretestpilot",
+            "com"
+          ],
+          "path": [
+            "api",
+            "public",
+            "demoshop",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get product - not found",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 404\", () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://www.softwaretestpilot.com/api/public/demoshop/products/99999",
+          "protocol": "https",
+          "host": [
+            "www",
+            "softwaretestpilot",
+            "com"
+          ],
+          "path": [
+            "api",
+            "public",
+            "demoshop",
+            "products",
+            "99999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add to cart - no token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 401\", () => pm.response.to.have.status(401));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"productId\": 1, \"quantity\": 2}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://www.softwaretestpilot.com/api/public/demoshop/cart/items",
+          "protocol": "https",
+          "host": [
+            "www",
+            "softwaretestpilot",
+            "com"
+          ],
+          "path": [
+            "api",
+            "public",
+            "demoshop",
+            "cart",
+            "items"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "orderId",
+      "value": ""
+    }
+  ]
+}
